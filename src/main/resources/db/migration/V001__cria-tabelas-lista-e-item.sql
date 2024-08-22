@@ -11,7 +11,7 @@ CREATE TABLE item (
     descricao VARCHAR(200) NOT NULL,
     status VARCHAR(25) NOT NULL,
     is_prioritaria BOOLEAN,
-    data_criacao DATETIME(6),
+    data_criacao DATETIME(6) NOT NULL,
     data_conclusao DATETIME(6),
     lista_id BIGINT,
     FOREIGN KEY (lista_id) REFERENCES lista(id) ON DELETE CASCADE

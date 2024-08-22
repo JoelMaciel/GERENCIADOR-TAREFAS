@@ -1,16 +1,18 @@
 package com.joelmaciel.api_gerenciador.domain.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "lista")
 public class Lista {
 
@@ -25,5 +27,5 @@ public class Lista {
     private LocalDateTime dataCriacao;
 
     @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL)
-    private Set<Item> items = new HashSet<>();
+    private List<Item> itens = new ArrayList<>();
 }

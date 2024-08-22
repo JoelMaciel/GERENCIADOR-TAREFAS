@@ -2,14 +2,16 @@ package com.joelmaciel.api_gerenciador.domain.models;
 
 import com.joelmaciel.api_gerenciador.domain.enums.StatusItem;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "item")
 public class Item {
