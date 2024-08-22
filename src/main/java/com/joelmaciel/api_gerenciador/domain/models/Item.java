@@ -4,7 +4,7 @@ import com.joelmaciel.api_gerenciador.domain.enums.StatusItem;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -29,8 +29,8 @@ public class Item {
 
     private boolean isPrioritaria = false;
 
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataConclusao;
+    private LocalDate dataCriacao;
+    private LocalDate dataConclusao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lista_id")

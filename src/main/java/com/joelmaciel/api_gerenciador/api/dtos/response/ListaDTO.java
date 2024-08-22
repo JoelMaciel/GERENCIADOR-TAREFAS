@@ -1,8 +1,8 @@
-package com.joelmaciel.api_gerenciador.api.dtos;
+package com.joelmaciel.api_gerenciador.api.dtos.response;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -14,6 +14,6 @@ public class ListaDTO {
 
     private Long id;
     private String nome;
-    private LocalDateTime dataCriacao;
+    private LocalDate dataCriacao;
     private List<ItemDTO> itens;
 }

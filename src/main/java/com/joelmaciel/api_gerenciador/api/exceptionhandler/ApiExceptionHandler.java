@@ -1,6 +1,7 @@
 package com.joelmaciel.api_gerenciador.api.exceptionhandler;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.joelmaciel.api_gerenciador.domain.exceptions.EntidadeNaoEncontradaException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.context.MessageSource;
@@ -47,6 +48,21 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
+
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ResponseEntity<?> handleEntityNotFound(EntidadeNaoEncontradaException ex, WebRequest webRequest) {
+
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ProblemType problemType = ProblemType.RECURSO_NAO_EXISTE;
+        String detail = ex.getMessage();
+
+        Problem problem = createProblemBuilder(status, problemType, detail)
+                .userMessage(detail)
+                .build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, webRequest);
+    }
+
 
     @ExceptionHandler(PropertyReferenceException.class)
     public ResponseEntity<?> PropertyReference(PropertyReferenceException ex, WebRequest webRequest) {

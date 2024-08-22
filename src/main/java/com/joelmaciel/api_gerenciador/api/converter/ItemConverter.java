@@ -1,11 +1,11 @@
 package com.joelmaciel.api_gerenciador.api.converter;
 
-import com.joelmaciel.api_gerenciador.api.dtos.ItemDTO;
-import com.joelmaciel.api_gerenciador.api.dtos.ItemRequestDTO;
+import com.joelmaciel.api_gerenciador.api.dtos.request.ItemRequestDTO;
+import com.joelmaciel.api_gerenciador.api.dtos.response.ItemDTO;
 import com.joelmaciel.api_gerenciador.domain.enums.StatusItem;
 import com.joelmaciel.api_gerenciador.domain.models.Item;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class ItemConverter {
 
@@ -17,7 +17,7 @@ public class ItemConverter {
                 .titulo(itemRequestDTO.getTitulo())
                 .descricao(itemRequestDTO.getDescricao())
                 .status(StatusItem.PENDENTE)
-                .dataCriacao(LocalDateTime.now())
+                .dataCriacao(LocalDate.now())
                 .build();
     }
 

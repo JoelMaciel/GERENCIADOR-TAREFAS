@@ -1,12 +1,13 @@
 package com.joelmaciel.api_gerenciador.api.converter;
 
-import com.joelmaciel.api_gerenciador.api.dtos.ItemDTO;
-import com.joelmaciel.api_gerenciador.api.dtos.ListaDTO;
-import com.joelmaciel.api_gerenciador.api.dtos.ListaRequestDTO;
+import com.joelmaciel.api_gerenciador.api.dtos.request.ListaRequestDTO;
+import com.joelmaciel.api_gerenciador.api.dtos.response.ItemDTO;
+import com.joelmaciel.api_gerenciador.api.dtos.response.ListaDTO;
+import com.joelmaciel.api_gerenciador.api.dtos.response.ListaResumoDTO;
 import com.joelmaciel.api_gerenciador.domain.models.Item;
 import com.joelmaciel.api_gerenciador.domain.models.Lista;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ListaConverter {
@@ -22,8 +23,16 @@ public class ListaConverter {
         return ListaDTO.builder()
                 .id(lista.getId())
                 .nome(lista.getNome())
-                .dataCriacao(LocalDateTime.now())
+                .dataCriacao(LocalDate.now())
                 .itens(itemDTOS)
+                .build();
+    }
+
+    public static ListaResumoDTO toSummaryDTO(Lista lista) {
+        return ListaResumoDTO.builder()
+                .id(lista.getId())
+                .nome(lista.getNome())
+                .dataCriacao(lista.getDataCriacao())
                 .build();
     }
 

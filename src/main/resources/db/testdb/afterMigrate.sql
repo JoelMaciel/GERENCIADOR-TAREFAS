@@ -10,8 +10,8 @@ set foreign_key_checks = 1;
 
 
 INSERT INTO lista (id, nome, data_criacao) VALUES
-(1, 'Lista de Compras', NOW()),
-(2, 'Lista de Viagem', NOW());
+(1, 'Lista de Compras', '2024-08-10'),
+(2, 'Lista de Viagem', '2024-08-15');
 
 INSERT INTO item (id, titulo, descricao, status, is_prioritaria, data_criacao, data_conclusao, lista_id) VALUES
 (1, 'Comprar Leite', 'Comprar 2 litros de leite', 'PENDENTE', true, UTC_TIMESTAMP(), NULL, 1),

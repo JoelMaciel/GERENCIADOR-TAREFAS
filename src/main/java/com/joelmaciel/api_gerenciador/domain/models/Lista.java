@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class Lista {
     private String nome;
 
     @CreationTimestamp
-    private LocalDateTime dataCriacao;
+    private LocalDate dataCriacao;
 
     @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL)
     private List<Item> itens = new ArrayList<>();

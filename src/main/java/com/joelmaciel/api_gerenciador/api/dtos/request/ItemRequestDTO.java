@@ -1,4 +1,4 @@
-package com.joelmaciel.api_gerenciador.api.dtos;
+package com.joelmaciel.api_gerenciador.api.dtos.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
