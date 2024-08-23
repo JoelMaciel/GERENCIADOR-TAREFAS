@@ -17,4 +17,6 @@ public interface ItemService {
     void iniciarItem(Long listaId, Long itemId);
 
     void concluirItem(Long listaId, Long itemId);
+
+    void alterarPrioridadeItem(Long listaId, Long itemId);
 }

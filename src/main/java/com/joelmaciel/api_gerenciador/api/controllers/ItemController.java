@@ -48,4 +48,9 @@ public class ItemController {
         itemService.concluirItem(listaId, itemId);
     }
 
+    @PatchMapping("/{itemId}/prioridade")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void alterarPrioridadeItem (@PathVariable Long listaId, @PathVariable Long itemId) {
+        itemService.alterarPrioridadeItem(listaId, itemId);
+    }
 }

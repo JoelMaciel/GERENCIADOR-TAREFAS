@@ -79,6 +79,13 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
+    @Transactional
+    @Override
+    public void alterarPrioridadeItem(Long listaId, Long itemId) {
+        Item item = buscarItemRelacionado(listaId, itemId);
+        item.setPrioritaria(true);
+    }
+
     @Override
     public Item buscarOptionalItem(Long itemId) {
         return itemRepository.findById(itemId)
