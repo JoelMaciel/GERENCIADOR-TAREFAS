@@ -43,6 +43,10 @@ public class ListaServiceImpl implements ListaService {
     @Override
     public ListaDTO buscarListaPorId(Long listaId) {
         Lista lista = buscarOptionalLista(listaId);
+
+        lista.getItens().sort(
+                (item1, item2) -> Boolean.compare(item2.isPrioritaria(), item1.isPrioritaria()));
+
         return ListaConverter.toDTO(lista);
     }
 

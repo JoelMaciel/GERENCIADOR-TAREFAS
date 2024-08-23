@@ -1,6 +1,7 @@
 package com.joelmaciel.api_gerenciador.api.exceptionhandler;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.joelmaciel.api_gerenciador.domain.exceptions.BusinessException;
 import com.joelmaciel.api_gerenciador.domain.exceptions.EntidadeNaoEncontradaException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.exception.ConstraintViolationException;
@@ -54,6 +55,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         HttpStatus status = HttpStatus.NOT_FOUND;
         ProblemType problemType = ProblemType.RECURSO_NAO_EXISTE;
+        String detail = ex.getMessage();
+
+        Problem problem = createProblemBuilder(status, problemType, detail)
+                .userMessage(detail)
+                .build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, webRequest);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<?> handleEntityNotFound(BusinessException ex, WebRequest webRequest) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.DADOS_INVALIDOS;
         String detail = ex.getMessage();
 
         Problem problem = createProblemBuilder(status, problemType, detail)
