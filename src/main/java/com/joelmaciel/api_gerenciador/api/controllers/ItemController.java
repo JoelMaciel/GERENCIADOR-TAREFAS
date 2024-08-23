@@ -36,4 +36,16 @@ public class ItemController {
         itemService.deleteItem(listaId, itemId);
     }
 
+    @PatchMapping("/{itemId}/status-progresso")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void iniciarItem(@PathVariable Long listaId, @PathVariable Long itemId) {
+        itemService.iniciarItem(listaId, itemId);
+    }
+
+    @PatchMapping("/{itemId}/status-confirmado")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void concluirItem(@PathVariable Long listaId, @PathVariable Long itemId) {
+        itemService.concluirItem(listaId, itemId);
+    }
+
 }

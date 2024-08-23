@@ -3,6 +3,7 @@ package com.joelmaciel.api_gerenciador.domain.services.impl;
 import com.joelmaciel.api_gerenciador.api.converter.ItemConverter;
 import com.joelmaciel.api_gerenciador.api.dtos.request.ItemRequestDTO;
 import com.joelmaciel.api_gerenciador.api.dtos.response.ItemDTO;
+import com.joelmaciel.api_gerenciador.domain.enums.StatusItem;
 import com.joelmaciel.api_gerenciador.domain.exceptions.BusinessException;
 import com.joelmaciel.api_gerenciador.domain.exceptions.ItemNaoEncontradoException;
 import com.joelmaciel.api_gerenciador.domain.models.Item;
@@ -14,11 +15,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @RequiredArgsConstructor
 @Service
 public class ItemServiceImpl implements ItemService {
 
     public static final String ITEM_NAO_PERTENCE_A_ESTA_LISTA = "O item não pertence a lista informada.";
+    public static final String MSG_NO_ESTADO_PENDENTE = "O item so pode se iniciado se estiver no estado pendente";
+    public static final String MSG_NO_ESTADO_EM_PROGRESSO = "O item so pode ser concluído se estiver no estado em progresso";
     private final ItemRepository itemRepository;
     private final ListaService listaService;
 
@@ -47,6 +52,31 @@ public class ItemServiceImpl implements ItemService {
     public void deleteItem(Long listaId, Long itemId) {
         Item item = buscarItemRelacionado(listaId, itemId);
         itemRepository.delete(item);
+    }
+
+    @Transactional
+    @Override
+    public void iniciarItem(Long listaId, Long itemId) {
+        Item item = buscarItemRelacionado(listaId, itemId);
+
+        if (item.getStatus().equals(StatusItem.PENDENTE)) {
+            item.setStatus(StatusItem.EM_PROGRESSO);
+        } else {
+            throw new BusinessException(MSG_NO_ESTADO_PENDENTE);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void concluirItem(Long listaId, Long itemId) {
+        Item item = buscarItemRelacionado(listaId, itemId);
+
+        if (item.getStatus().equals(StatusItem.EM_PROGRESSO)) {
+            item.setStatus(StatusItem.CONCLUIDA);
+            item.setDataConclusao(LocalDate.now());
+        } else {
+            throw new BusinessException(MSG_NO_ESTADO_EM_PROGRESSO);
+        }
     }
 
     @Override

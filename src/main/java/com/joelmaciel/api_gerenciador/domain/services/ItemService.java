@@ -13,4 +13,8 @@ public interface ItemService {
     Item buscarOptionalItem(Long itemId);
 
     void deleteItem(Long listaId, Long itemId);
+
+    void iniciarItem(Long listaId, Long itemId);
+
+    void concluirItem(Long listaId, Long itemId);
 }
