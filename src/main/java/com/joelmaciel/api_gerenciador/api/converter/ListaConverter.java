@@ -15,7 +15,7 @@ public class ListaConverter {
     private ListaConverter() {
     }
 
-    public static ListaDTO toDTO(Lista lista) {
+    public ListaDTO toDTO(Lista lista) {
         List<ItemDTO> itemDTOS = lista.getItens().stream()
                 .map(ItemConverter::toDTO)
                 .toList();
@@ -28,7 +28,7 @@ public class ListaConverter {
                 .build();
     }
 
-    public static ListaResumoDTO toSummaryDTO(Lista lista) {
+    public  ListaResumoDTO toSummaryDTO(Lista lista) {
         return ListaResumoDTO.builder()
                 .id(lista.getId())
                 .nome(lista.getNome())
@@ -36,7 +36,7 @@ public class ListaConverter {
                 .build();
     }
 
-    public static Lista toModel(ListaRequestDTO listaRequestDTO) {
+    public  Lista toModel(ListaRequestDTO listaRequestDTO) {
         Lista lista = Lista.builder()
                 .nome(listaRequestDTO.getNome())
                 .build();
