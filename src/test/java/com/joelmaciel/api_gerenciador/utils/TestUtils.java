@@ -21,10 +21,24 @@ public class TestUtils {
                 .build();
     }
 
+    public static ListaRequestDTO getMockInvalidaListaRequestDTO(List<ItemRequestDTO> itens) {
+        return ListaRequestDTO.builder()
+                .nome("")
+                .itens(null)
+                .build();
+    }
+
     public static ItemRequestDTO getMockItemRequestDTO() {
         return ItemRequestDTO.builder()
                 .titulo("Depositos de Construçao")
                 .descricao("Verificar quais depósitos estão com preços mais baratos.")
+                .build();
+    }
+
+    public static ItemRequestDTO getMockInvalidoItemRequestDTO() {
+        return ItemRequestDTO.builder()
+                .titulo("")
+                .descricao("")
                 .build();
     }
 
@@ -57,6 +71,7 @@ public class TestUtils {
                 .dataConclusao(null)
                 .build();
     }
+
     public static Item getMockItemDois() {
         return Item.builder()
                 .id(5L)

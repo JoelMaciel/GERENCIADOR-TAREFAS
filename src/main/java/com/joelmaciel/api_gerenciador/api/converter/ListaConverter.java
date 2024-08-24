@@ -6,10 +6,12 @@ import com.joelmaciel.api_gerenciador.api.dtos.response.ListaDTO;
 import com.joelmaciel.api_gerenciador.api.dtos.response.ListaResumoDTO;
 import com.joelmaciel.api_gerenciador.domain.models.Item;
 import com.joelmaciel.api_gerenciador.domain.models.Lista;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Component
 public class ListaConverter {
 
     private ListaConverter() {
