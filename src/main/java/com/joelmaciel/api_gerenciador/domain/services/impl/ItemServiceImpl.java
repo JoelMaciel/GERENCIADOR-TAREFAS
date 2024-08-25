@@ -26,14 +26,15 @@ public class ItemServiceImpl implements ItemService {
     public static final String MSG_NO_ESTADO_EM_PROGRESSO = "O item so pode ser concluído se estiver no estado em progresso";
     private final ItemRepository itemRepository;
     private final ListaService listaService;
+    private final ItemConverter itemConverter;
 
     @Transactional
     @Override
     public ItemDTO adicionarItem(Long listaId, ItemRequestDTO itemRequestDTO) {
         Lista lista = listaService.buscarOptionalLista(listaId);
-        Item item = ItemConverter.toModel(itemRequestDTO);
+        Item item = itemConverter.toModel(itemRequestDTO);
         item.setLista(lista);
-        return ItemConverter.toDTO(itemRepository.save(item));
+        return itemConverter.toDTO(itemRepository.save(item));
     }
 
     @Transactional
@@ -44,7 +45,7 @@ public class ItemServiceImpl implements ItemService {
         item.setTitulo(itemRequestDTO.getTitulo());
         item.setDescricao(itemRequestDTO.getDescricao());
 
-        return ItemConverter.toDTO(item);
+        return itemConverter.toDTO(itemRepository.save(item));
     }
 
     @Transactional
