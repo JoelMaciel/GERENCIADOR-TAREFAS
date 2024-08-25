@@ -4,15 +4,17 @@ import com.joelmaciel.api_gerenciador.api.dtos.request.ItemRequestDTO;
 import com.joelmaciel.api_gerenciador.api.dtos.response.ItemDTO;
 import com.joelmaciel.api_gerenciador.domain.enums.StatusItem;
 import com.joelmaciel.api_gerenciador.domain.models.Item;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class ItemConverter {
 
     private ItemConverter() {
     }
 
-    public static Item toModel(ItemRequestDTO itemRequestDTO) {
+    public Item toModel(ItemRequestDTO itemRequestDTO) {
         return Item.builder()
                 .titulo(itemRequestDTO.getTitulo())
                 .descricao(itemRequestDTO.getDescricao())
@@ -21,7 +23,7 @@ public class ItemConverter {
                 .build();
     }
 
-    public static ItemDTO toDTO(Item item) {
+    public ItemDTO toDTO(Item item) {
         return ItemDTO.builder()
                 .id(item.getId())
                 .titulo(item.getTitulo())
