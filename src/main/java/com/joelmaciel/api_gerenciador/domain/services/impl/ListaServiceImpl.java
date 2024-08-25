@@ -5,6 +5,7 @@ import com.joelmaciel.api_gerenciador.api.dtos.request.ListaRequestDTO;
 import com.joelmaciel.api_gerenciador.api.dtos.response.ListaDTO;
 import com.joelmaciel.api_gerenciador.api.dtos.response.ListaResumoDTO;
 import com.joelmaciel.api_gerenciador.domain.exceptions.ListaNaoEncontradaException;
+import com.joelmaciel.api_gerenciador.domain.models.Item;
 import com.joelmaciel.api_gerenciador.domain.models.Lista;
 import com.joelmaciel.api_gerenciador.domain.repositories.ListaRepository;
 import com.joelmaciel.api_gerenciador.domain.services.ListaService;
@@ -15,28 +16,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class ListaServiceImpl implements ListaService {
 
     private final ListaRepository listaRepository;
+    private final ListaConverter listaConverter;
 
     @Transactional
     @Override
     public ListaDTO adicionarLista(ListaRequestDTO listaRequestDTO) {
-        Lista lista = ListaConverter.toModel(listaRequestDTO);
-        return ListaConverter.toDTO(listaRepository.save(lista));
+        Lista lista = listaConverter.toModel(listaRequestDTO);
+        return listaConverter.toDTO(listaRepository.save(lista));
     }
 
     @Override
     public Page<ListaResumoDTO> buscarTodas(LocalDate dataInicio, LocalDate dataFim, Pageable pageable) {
         if (dataInicio != null && dataFim != null) {
             return listaRepository.findByDataCriacaoBetween(dataInicio, dataFim, pageable)
-                    .map(ListaConverter::toSummaryDTO);
+                    .map(listaConverter::toSummaryDTO);
         } else {
             return listaRepository.findAll(pageable)
-                    .map(ListaConverter::toSummaryDTO);
+                    .map(listaConverter::toSummaryDTO);
         }
     }
 
@@ -44,10 +48,14 @@ public class ListaServiceImpl implements ListaService {
     public ListaDTO buscarListaPorId(Long listaId) {
         Lista lista = buscarOptionalLista(listaId);
 
-        lista.getItens().sort(
+        List<Item> itensOrdenados = new ArrayList<>(lista.getItens());
+
+        itensOrdenados.sort(
                 (item1, item2) -> Boolean.compare(item2.isPrioritaria(), item1.isPrioritaria()));
 
-        return ListaConverter.toDTO(lista);
+        lista.setItens(itensOrdenados);
+
+        return listaConverter.toDTO(lista);
     }
 
     @Transactional

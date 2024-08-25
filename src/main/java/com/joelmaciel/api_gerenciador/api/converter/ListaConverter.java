@@ -6,18 +6,24 @@ import com.joelmaciel.api_gerenciador.api.dtos.response.ListaDTO;
 import com.joelmaciel.api_gerenciador.api.dtos.response.ListaResumoDTO;
 import com.joelmaciel.api_gerenciador.domain.models.Item;
 import com.joelmaciel.api_gerenciador.domain.models.Lista;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Component
 public class ListaConverter {
+
+    @Autowired
+    private ItemConverter itemConverter;
 
     private ListaConverter() {
     }
 
-    public static ListaDTO toDTO(Lista lista) {
+    public ListaDTO toDTO(Lista lista) {
         List<ItemDTO> itemDTOS = lista.getItens().stream()
-                .map(ItemConverter::toDTO)
+                .map(itemConverter::toDTO)
                 .toList();
 
         return ListaDTO.builder()
@@ -28,7 +34,7 @@ public class ListaConverter {
                 .build();
     }
 
-    public static ListaResumoDTO toSummaryDTO(Lista lista) {
+    public  ListaResumoDTO toSummaryDTO(Lista lista) {
         return ListaResumoDTO.builder()
                 .id(lista.getId())
                 .nome(lista.getNome())
@@ -36,13 +42,13 @@ public class ListaConverter {
                 .build();
     }
 
-    public static Lista toModel(ListaRequestDTO listaRequestDTO) {
+    public  Lista toModel(ListaRequestDTO listaRequestDTO) {
         Lista lista = Lista.builder()
                 .nome(listaRequestDTO.getNome())
                 .build();
 
         List<Item> items = listaRequestDTO.getItens().stream()
-                .map(ItemConverter::toModel)
+                .map(itemConverter::toModel)
                 .toList();
 
         items.forEach(item -> item.setLista(lista));
